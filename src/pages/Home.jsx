@@ -106,7 +106,7 @@ function Home() {
             startIcon={<CloudUploadIcon />}
             component="label"
           >
-            Upload PDF
+            Upload TXT
             <input type="file" hidden onChange={handleFileSelect} accept=".txt" />
           </Button>
         </Grid>
