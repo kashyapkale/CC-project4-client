@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Home from './pages/Home';
 import LectureView from './pages/LectureView';
+import Chat from './pages/Chat';
 
 const theme = createTheme({
   palette: {
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/lecture/:id" element={<LectureView />} />
+          <Route path="/chat" element={<Chat />} /> 
         </Routes>
       </Router>
     </ThemeProvider>

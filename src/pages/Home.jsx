@@ -85,11 +85,11 @@ function Home() {
 
   return (
     <div className="container-main">
+    
     <Container maxWidth={false} className="container">
       <Typography variant="h3" gutterBottom align="center">
         Lecture AI Assistant
       </Typography>
-
       <Grid container spacing={2} alignItems="center" justifyContent="center" sx={{ mb: 4 }}>
         <Grid item xs={12} md={4}>
           <TextField
@@ -108,6 +108,16 @@ function Home() {
           >
             Upload PDF
             <input type="file" hidden onChange={handleFileSelect} accept=".txt" />
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <Button
+            variant="contained"
+            fullWidth
+            component="label"
+            onClick={() => navigate('/chat')}
+          >
+            Chat with AI
           </Button>
         </Grid>
       </Grid>
