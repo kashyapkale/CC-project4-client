@@ -1,19 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Chat.css';
+import { ChatMessage } from '../types';
 
-const Chat = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const bottomRef = useRef(null);
+const Chat = (): JSX.Element => {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSend = async () => {
+  const handleSend = async (): Promise<void> => {
     const trimmed = input.trim();
     if (!trimmed) return;
 
@@ -36,7 +37,7 @@ const Chat = () => {
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter') handleSend();
   };
 
@@ -63,7 +64,7 @@ const Chat = () => {
           type="text"
           placeholder="Ask a question…"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
         />
         <button onClick={handleSend}>Send</button>
@@ -72,4 +73,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default Chat; 

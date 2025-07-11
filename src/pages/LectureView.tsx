@@ -11,20 +11,21 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios';
+import { Lecture } from '../types';
 
-function LectureView() {
-  const [notes, setNotes] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const { id } = useParams();
+function LectureView(): JSX.Element {
+  const [notes, setNotes] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchNotes = async () => {
+    const fetchNotes = async (): Promise<void> => {
       try {
-        const response = await axios.get(`https://4xoppvn7g2.execute-api.us-east-2.amazonaws.com/prod/listLectures`);
+        const response = await axios.get<{ lectures: Lecture[] }>(`https://4xoppvn7g2.execute-api.us-east-2.amazonaws.com/prod/listLectures`);
         const lecture = response.data.lectures.find(
-          l => l.lecture_id === decodeURIComponent(id)
+          (l: Lecture) => l.lecture_id === decodeURIComponent(id || '')
         );
         
         if (!lecture) {

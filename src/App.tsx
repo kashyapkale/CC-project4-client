@@ -19,7 +19,7 @@ const theme = createTheme({
   },
 });
 
-function App() {
+function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -34,4 +34,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

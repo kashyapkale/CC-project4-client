@@ -18,29 +18,30 @@ import {
   Grid,
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './LectureRow.css';
+import { Lecture } from '../types';
 
 const HARDCODED_PASSWORD = 'lecture123';
 
-function Home() {
-  const [lectures, setLectures] = useState([]);
-  const [openPasswordDialog, setOpenPasswordDialog] = useState(false);
-  const [password, setPassword] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [lectureTitle, setLectureTitle] = useState('');
-  const [error, setError] = useState('');
+function Home(): JSX.Element {
+  const [lectures, setLectures] = useState<Lecture[]>([]);
+  const [openPasswordDialog, setOpenPasswordDialog] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [lectureTitle, setLectureTitle] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchLectures();
   }, []);
 
-  const fetchLectures = async () => {
+  const fetchLectures = async (): Promise<void> => {
     try {
-      const response = await axios.get(
+      const response = await axios.get<{ lectures: Lecture[] }>(
         'https://4xoppvn7g2.execute-api.us-east-2.amazonaws.com/prod/listLectures'
       );
       setLectures(response.data.lectures);
@@ -49,12 +50,13 @@ function Home() {
     }
   };
 
-  const handleFileSelect = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const handleFileSelect = (event: ChangeEvent<HTMLInputElement>): void => {
+    const file = event.target.files?.[0] || null;
+    setSelectedFile(file);
     setOpenPasswordDialog(true);
   };
 
-  const handlePasswordSubmit = async () => {
+  const handlePasswordSubmit = async (): Promise<void> => {
     if (password === HARDCODED_PASSWORD) {
       setOpenPasswordDialog(false);
       if (selectedFile && lectureTitle) {
@@ -175,4 +177,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Home; 
