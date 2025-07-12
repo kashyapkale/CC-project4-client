@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -12,8 +12,9 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios';
 import { Lecture } from '../types';
+import { ENDPOINTS } from '../api/endpoints';
 
-function LectureView(): JSX.Element {
+function LectureView(): React.JSX.Element {
   const [notes, setNotes] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
@@ -23,7 +24,7 @@ function LectureView(): JSX.Element {
   useEffect(() => {
     const fetchNotes = async (): Promise<void> => {
       try {
-        const response = await axios.get<{ lectures: Lecture[] }>(`https://4xoppvn7g2.execute-api.us-east-2.amazonaws.com/prod/listLectures`);
+        const response = await axios.get<{ lectures: Lecture[] }>(ENDPOINTS.listLectures);
         const lecture = response.data.lectures.find(
           (l: Lecture) => l.lecture_id === decodeURIComponent(id || '')
         );
